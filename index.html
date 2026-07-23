@@ -1,0 +1,2125 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rajbari Ranna — Authentic Bengali Cloud Kitchen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Manrope:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --terracotta:#A0522D;
+  --cream:#F8F4E9;
+  --vermillion:#9B1C31;
+  --banana:#5B7F3A;
+  --mustard:#D4A017;
+  --bg:#F8F4E9;
+  --bg-alt:#F0E9D6;
+  --text:#2B1810;
+  --text-soft:#5C3D2E;
+  --card:#FFFDF7;
+  --border:rgba(160,82,45,0.2);
+  --shadow:rgba(43,24,16,0.08);
+  --nav-bg:rgba(248,244,233,0.92);
+  --hero-overlay:rgba(43,24,16,0.55);
+}
+
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Manrope',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  transition:background .5s,color .5s;
+}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;color:var(--text)}
+.serif-italic{font-family:'Cormorant Garamond',serif;font-style:italic}
+
+/* Loading */
+#loader{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .8s;
+}
+#loader.hide{opacity:0;pointer-events:none}
+
+@keyframes draw{to{stroke-dashoffset:0}}
+.loader-text{
+  font-family:'Playfair Display',serif;
+  color:var(--vermillion);
+  font-size:1.1rem;letter-spacing:3px;
+  margin-top:1rem;text-align:center;
+  animation:pulse 1.5s infinite;
+}
+@keyframes pulse{50%{opacity:.4}}
+
+
+
+/* Nav */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:var(--vermillion); /* Solid Maroon Navbar */
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255, 255, 255, 0.15);
+  padding:.6rem 2rem;
+  height: 70px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:all .4s;
+  overflow: visible;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-decoration: none !important;
+  position: relative;
+  z-index: 101;
+}
+.nav-logo .logo-img {
+  width: 150px;             /* Large prominent size */
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-top: 80px;         /* Pulls the logo downwards to hang over the hero section */
+  box-shadow: 0 8px 24px rgba(43, 24, 16, 0.25);
+  border: 3px solid var(--cream); /* Clean border separator */
+  transition: transform 0.3s ease;
+}
+
+/* Responsive adjustment for mobile screens */
+@media (max-width: 700px) {
+  .nav-logo .logo-img {
+    width: 75px;
+    height: 75px;
+    margin-top: 15px;
+  }
+}
+.nav-logo:hover .logo-img {
+  transform: scale(1.05);
+}
+
+/* Navigation Links - Sharp Cream Text */
+.nav-links{display:flex;gap:1.8rem;list-style:none;align-items:center}
+.nav-links a{
+  text-decoration:none;
+  color:var(--cream);       /* Clear, high-contrast text */
+  font-weight:600;
+  font-size:.95rem;
+  position:relative;
+  transition:color .3s;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;
+  width:0;height:2px;
+  background:var(--mustard); /* Golden underline on hover */
+  transition:width .3s;
+}
+.nav-links a:hover{
+  color:var(--mustard);      /* Soft gold hover text */
+}
+.nav-links a:hover::after{width:100%}
+
+/* Action Buttons & Cart Icon */
+.nav-actions{display:flex;gap:.8rem;align-items:center}
+.icon-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cream);
+  font-size: 1.1rem;
+  transition: all .3s;
+  position: relative;
+}
+.icon-btn:hover{
+  background:var(--mustard);
+  color:var(--text);
+  border-color:var(--mustard);
+}
+.cart-count{
+  position:absolute;top:-4px;right:-4px;
+  background:var(--mustard); /* Gold counter badge */
+  color:var(--text);
+  font-size:.7rem;width:18px;height:18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;
+}
+.menu-toggle{
+  display:none;
+  color:var(--cream);
+}
+
+/* Hero */
+.hero{
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8rem 5% 4rem;
+  overflow: hidden;
+  background: url('https://i.postimg.cc/kMsmdPtZ/Gemini-Generated-Image-ime52qime52qime5.png') no-repeat center center / cover;
+}
+
+/* Semi-transparent overlay so your text remains easy to read */
+.hero::before{
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(248, 244, 233, 0.45);
+  backdrop-filter: blur(0.5px);
+  z-index: 1;
+}
+
+/* Dark mode overlay adjustment */
+[data-theme="dark"] .hero::before{
+  background: rgba(26, 15, 10, 0.7);
+}
+
+.hero-content{
+  position: relative;
+  z-index: 2;
+  max-width: 580px;
+  text-align: left;
+  margin: 4%;
+}
+
+.hero-badge{
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .5rem 1.2rem;
+  background: rgba(155,28,49,.1);
+  border: 1px solid rgba(155,28,49,.3);
+  border-radius: 50px;
+  font-size: .85rem;
+  color: var(--vermillion);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
+}
+
+.hero h1{
+  font-size: clamp(2.5rem, 5.5vw, 4.8rem);
+  font-weight: 900;
+  line-height: 1.05;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg,var(--vermillion) 0%,var(--terracotta) 50%,var(--mustard) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-tagline{
+  font-family: 'Cormorant Garamond',serif;
+  font-size: clamp(1.2rem,2.5vw,1.8rem);
+  font-style: italic;
+  color: #5C2C1D;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  opacity: 0.92;
+}
+
+.hero-sub{
+  font-size: 1.05rem;
+  color: #3A2218;
+  font-weight: 600;
+  max-width: 540px;
+  margin: 0 0 2.5rem 0;
+  line-height: 1.7;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.hero-cta{
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+/* Rotating Decorative Graphic */
+.hero-graphic {
+  position: relative;
+  z-index: 2;
+  width: 650px;
+  height: 650px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Background Rotating Pattern Circle */
+.rotating-circle {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: spinCircle 35s linear infinite;
+  mix-blend-mode: multiply; /* Blends out light grid backgrounds automatically */
+  opacity: 0.85;
+}
+
+/* Foreground Artwork (Lady with Handi) */
+.hero-center-art {
+  position: relative;
+  z-index: 3;
+  width: 85%;   /* Perfectly fits within the decorative circle frame */
+  height: 85%;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 30px rgba(43, 24, 16, 0.3));
+}
+/* Smoke / Steam Container */
+.pot-steam-container {
+  position: absolute;
+  z-index: 4; /* Sits directly in front of the handi pot */
+  top: 48%;   /* Positioned right above the pot opening */
+  left: 28%;  /* Aligned horizontally with the handi */
+  width: 60px;
+  height: 80px;
+  pointer-events: none;
+}
+
+/* Individual Smoke Particles */
+.steam-particle {
+  position: absolute;
+  bottom: 0;
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 70%);
+  border-radius: 50%;
+  filter: blur(5px); /* Creates the soft, wispy smoke look */
+  opacity: 0;
+  animation: riseSmoke 3.5s infinite ease-out;
+}
+
+/* Stagger particle timings for continuous flow */
+.steam-particle:nth-child(1) { left: 5px;  animation-delay: 0s; }
+.steam-particle:nth-child(2) { left: 20px; animation-delay: 0.9s; }
+.steam-particle:nth-child(3) { left: 35px; animation-delay: 1.8s; }
+.steam-particle:nth-child(4) { left: 15px; animation-delay: 2.7s; }
+
+/* Smoke Rising Keyframe Animation */
+@keyframes riseSmoke {
+  0% {
+    transform: translateY(0) scale(0.6) rotate(0deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.65; /* Fades in softly near the pot rim */
+  }
+  60% {
+    transform: translateY(-40px) scale(1.4) translateX(-8px) rotate(15deg);
+    opacity: 0.35;
+  }
+  100% {
+    transform: translateY(-75px) scale(2.2) translateX(12px) rotate(-20deg);
+    opacity: 0;   /* Dissolves naturally into the air */
+  }
+}
+
+/* Ensure the graphic wrapper handles absolute positioning properly */
+.hero-graphic {
+  position: relative;
+  z-index: 2;
+  width: 580px;
+  height: 580px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Responsive Scaling for Mobile Screens */
+@media (max-width: 1200px) {
+  .hero-graphic {
+    width: 460px;
+    height: 460px;
+    margin-top: 2rem;
+  }
+}
+
+@keyframes spinCircle {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.btn {
+  padding: .9rem 2rem;
+  border: none;
+  cursor: pointer;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: .95rem;
+  border-radius: 50px;
+  transition: all .3s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn svg {
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--vermillion), var(--terracotta));
+  color: var(--cream);
+  box-shadow: 0 6px 20px rgba(155,28,49,.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(155,28,49,.4);
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255,255,255,.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width .6s, height .6s;
+}
+
+.btn-primary:hover::after {
+  width: 300px;
+  height: 300px;
+}
+
+.btn-secondary {
+  background: var(--card);
+  border: 2px solid var(--terracotta);
+  color: var(--text);
+}
+
+.btn-secondary:hover {
+  background: var(--terracotta);
+  color: var(--cream);
+  transform: translateY(-3px);
+}
+
+/* Section base */
+section{padding:5rem 2rem;position:relative}
+.section-header{text-align:center;margin-bottom:3.5rem}
+.section-tag{
+  display:inline-block;
+  font-size:.8rem;letter-spacing:3px;
+  color:var(--mustard);font-weight:700;
+  text-transform:uppercase;margin-bottom:.8rem;
+}
+.section-title{
+  font-size:clamp(2rem,4vw,3rem);
+  font-weight:700;margin-bottom:.8rem;
+  color:var(--text);
+}
+.section-subtitle{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;font-style:italic;
+  color:var(--text-soft);max-width:600px;margin:0 auto;
+}
+
+/* Alpona divider */
+.alpona-divider{
+  display:flex;align-items:center;justify-content:center;
+  gap:1rem;margin:2rem 0;
+  color:var(--terracotta);
+}
+.alpona-divider .line{
+  width:80px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--terracotta),transparent);
+}
+.alpona-divider .motif{font-size:1.5rem}
+
+/* Offers */
+.offers{background:var(--bg-alt)}
+.offers-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;max-width:1200px;margin:0 auto;
+}
+.offer-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:2rem;
+  position:relative;overflow:hidden;
+  transition:all .4s;
+}
+.offer-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--vermillion),var(--mustard),var(--banana));
+}
+.offer-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 40px var(--shadow);
+}
+.offer-card:hover .steam{opacity:1}
+.steam{
+  position:absolute;top:10px;right:20px;
+  opacity:0;transition:opacity .5s;
+  font-size:1.5rem;
+  animation:rise 2s infinite;
+}
+@keyframes rise{
+  0%{transform:translateY(0);opacity:0}
+  50%{opacity:.6}
+  100%{transform:translateY(-15px);opacity:0}
+}
+.offer-discount{
+  font-family:'Playfair Display',serif;
+  font-size:2.5rem;font-weight:900;
+  color:var(--vermillion);
+  line-height:1;
+}
+.offer-title{
+  font-size:1.1rem;font-weight:700;
+  margin:.5rem 0;
+}
+.offer-desc{color:var(--text-soft);font-size:.9rem;margin-bottom:1rem}
+.coupon{
+  background:var(--bg-alt);
+  border:1px dashed var(--terracotta);
+  padding:.6rem 1rem;border-radius:8px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:'Manrope',monospace;
+}
+.coupon-code{
+  font-weight:700;color:var(--vermillion);
+  letter-spacing:2px;font-size:.95rem;
+}
+.copy-btn{
+  background:var(--vermillion);color:var(--cream);
+  border:none;padding:.3rem .8rem;border-radius:5px;
+  cursor:pointer;font-size:.75rem;font-weight:600;
+}
+.copy-btn:hover{background:var(--terracotta)}
+
+/* Delivery */
+.delivery{background:var(--bg)}
+.delivery-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:1.5rem;max-width:1000px;margin:0 auto;
+}
+.delivery-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:2rem;text-align:center;
+  transition:all .3s;
+}
+.delivery-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 15px 30px var(--shadow);
+}
+.delivery-logo{
+  font-family:'Playfair Display',serif;
+  font-size:1.8rem;font-weight:900;
+  margin-bottom:.5rem;
+}
+.delivery-logo.swiggy{color:#FC8019}
+.delivery-logo.zomato{color:#E23744}
+.delivery-logo.direct{color:var(--banana)}
+.delivery-time{
+  font-size:.9rem;color:var(--text-soft);
+  margin-top:.5rem;
+}
+.delivery-time strong{color:var(--mustard);font-size:1.1rem}
+
+/* Best sellers */
+.bestsellers{background:var(--bg-alt)}
+.scroll-row{
+  display:flex;gap:1.5rem;overflow-x:auto;
+  padding:1rem 0 2rem;scroll-snap-type:x mandatory;
+  scrollbar-width:thin;scrollbar-color:var(--terracotta) var(--bg-alt);
+}
+.scroll-row::-webkit-scrollbar{height:8px}
+.scroll-row::-webkit-scrollbar-track{background:var(--bg-alt);border-radius:4px}
+.scroll-row::-webkit-scrollbar-thumb{background:var(--terracotta);border-radius:4px}
+.product-card{
+  min-width:280px;max-width:280px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  scroll-snap-align:start;
+  transition:all .4s;
+  position:relative;
+}
+.product-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 20px 40px var(--shadow);
+}
+.product-card:hover .steam{opacity:1}
+.product-img{
+  width:100%;height:200px;
+  object-fit:cover;
+  display:block;
+}
+.product-body{padding:1.2rem}
+.product-name{
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;font-weight:700;
+  margin-bottom:.3rem;
+}
+.product-desc{
+  font-size:.85rem;color:var(--text-soft);
+  margin-bottom:.8rem;
+}
+.product-footer{
+  display:flex;justify-content:space-between;align-items:center;
+}
+.product-price{
+  font-weight:800;font-size:1.1rem;
+  color:var(--vermillion);
+}
+.veg-badge,.nonveg-badge{
+  width:16px;height:16px;border-radius:3px;
+  display:inline-flex;align-items:center;justify-content:center;
+  border:1.5px solid;
+}
+.veg-badge{border-color:var(--banana)}
+.veg-badge::after{content:'';width:8px;height:8px;background:var(--banana);border-radius:50%}
+.nonveg-badge{border-color:var(--vermillion)}
+.nonveg-badge::after{content:'';width:8px;height:8px;background:var(--vermillion);border-radius:50%}
+.add-cart{
+  background:var(--vermillion);color:var(--cream);
+  border:none;padding:.5rem 1rem;border-radius:50px;
+  cursor:pointer;font-weight:600;font-size:.85rem;
+  transition:all .3s;
+}
+.add-cart:hover{background:var(--terracotta);transform:scale(1.05)}
+
+/* Filter */
+.filter-bar{
+  display:flex;justify-content:center;gap:.8rem;
+  margin-bottom:2rem;flex-wrap:wrap;
+}
+.filter-btn{
+  padding:.6rem 1.3rem;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:50px;
+  cursor:pointer;font-weight:600;
+  font-size:.9rem;color:var(--text);
+  transition:all .3s;
+}
+.filter-btn.active,.filter-btn:hover{
+  background:var(--vermillion);color:var(--cream);
+  border-color:var(--vermillion);
+}
+
+/* Categories */
+.categories{background:var(--bg)}
+.cat-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:1.5rem;max-width:1200px;margin:0 auto;
+}
+.cat-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:2rem;
+  position:relative;overflow:hidden;
+  transition:all .4s;
+}
+.cat-card::before{
+  content:'';position:absolute;top:0;right:0;
+  width:80px;height:80px;
+  background:radial-gradient(circle,var(--mustard) 0%,transparent 70%);
+  opacity:.3;
+}
+.cat-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 40px var(--shadow);
+}
+.cat-icon-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  display: block;
+}
+.cat-name{
+  font-family:'Playfair Display',serif;
+  font-size:1.5rem;font-weight:700;
+  margin-bottom:.5rem;
+}
+.cat-desc{
+  color:var(--text-soft);font-size:.95rem;
+  margin-bottom:1rem;line-height:1.5;
+}
+.cat-price{
+  display:inline-block;
+  background:rgba(212,160,23,.15);
+  color:var(--mustard);
+  padding:.3rem .8rem;border-radius:50px;
+  font-weight:700;font-size:.85rem;
+}
+.cat-items{
+  margin-top:1rem;
+  display:flex;flex-wrap:wrap;gap:.4rem;
+}
+.cat-item{
+  font-size:.75rem;
+  background:var(--bg-alt);
+  padding:.3rem .7rem;border-radius:50px;
+  color:var(--text-soft);
+}
+
+/* Story */
+.story{
+  background:linear-gradient(135deg,var(--bg-alt) 0%,var(--bg) 100%);
+  position:relative;overflow:hidden;
+}
+.story::before{
+  content:'';position:absolute;top:-100px;right:-100px;
+  width:400px;height:400px;
+  background:radial-gradient(circle,rgba(155,28,49,.08) 0%,transparent 70%);
+  border-radius:50%;
+}
+.story-container{
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:3rem;
+  align-items:start;
+}
+
+.story-left-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.story-img-wrap{
+  position:relative;
+  width: 100%;
+  padding: 14px; /* Creates equal spacing for the red frame around the photo */
+  box-sizing: border-box;
+}
+/* The photo sitting centered inside the red frame */
+.story-img {
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px var(--shadow);
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+/* Red frame wrapping symmetrically around all sides */
+.story-img-wrap::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid var(--vermillion);
+  border-radius: 28px; /* Smooth rounded corners following the photo */
+  z-index: 0;
+  pointer-events: none;
+}
+
+.story-content h2{
+  font-size:2.5rem;margin-bottom:1rem;
+  color:var(--vermillion);
+}
+.story-content .lead{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem;font-style:italic;
+  color:var(--text-soft);
+  margin-bottom:1.5rem;line-height:1.6;
+}
+.story-content p{
+  color:var(--text-soft);line-height:1.8;
+  margin-bottom:1rem;font-size:.98rem;
+}
+.story-quote{
+  border-left:3px solid var(--mustard);
+  padding:1rem 1.5rem;
+  background:rgba(212,160,23,.08);
+  border-radius:0 12px 12px 0;
+  margin:1.5rem 0;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem;font-style:italic;
+  color:var(--text);
+}
+
+.founder-caption {
+  text-align: center;
+  margin-top: 2rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--vermillion);
+  letter-spacing: 0.5px;
+}
+
+/* Team */
+.team{background:var(--bg-alt)}
+.team-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:2rem;max-width:1100px;margin:2rem auto 0;
+}
+.team-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:2rem;text-align:center;
+  transition:all .4s;
+}
+.team-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 40px var(--shadow);
+}
+.team-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  overflow: hidden; /* Ensures image stays circular */
+  border: 3px solid var(--terracotta); /* Elegant border frame */
+  box-shadow: 0 4px 12px rgba(43, 24, 16, 0.15);
+}
+
+.team-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Fits image perfectly inside circle without stretching */
+  display: block;
+}
+.team-name{
+  font-family:'Playfair Display',serif;
+  font-size:1.4rem;font-weight:700;
+  color:var(--vermillion);
+  margin-bottom:.3rem;
+}
+.team-role{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  color:var(--mustard);
+  font-size:1rem;
+  margin-bottom:1rem;
+}
+.team-bio{
+  color:var(--text-soft);font-size:.9rem;
+  line-height:1.6;
+}
+
+/* Stats */
+.stats{
+  background:linear-gradient(135deg,var(--vermillion) 0%,var(--terracotta) 100%);
+  color:var(--cream);
+}
+.stats .section-title{color:var(--cream)}
+.stats .section-subtitle{color:rgba(248,244,233,.8)}
+.stats .section-tag{color:var(--mustard)}
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:2rem;max-width:1000px;margin:0 auto;
+}
+.stat-card{
+  background:rgba(255,255,255,.1);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:30px;
+  padding:2.5rem 1.5rem;
+  text-align:center;
+  transition:all .4s;
+}
+.stat-card:hover{
+  transform:translateY(-8px);
+  background:rgba(255,255,255,.15);
+}
+.stat-num{
+  font-family:'Playfair Display',serif;
+  font-size:3rem;font-weight:900;
+  color:var(--mustard);
+  line-height:1;
+}
+.stat-label{
+  margin-top:.5rem;font-size:.95rem;
+  opacity:.9;
+}
+
+/* Testimonials */
+.testimonials{background:var(--bg)}
+.testi-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:1.5rem;max-width:1200px;margin:0 auto;
+}
+.testi-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:2rem;
+  position:relative;
+  transition:all .4s;
+}
+.testi-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 40px var(--shadow);
+}
+.testi-card::before{
+  content:'"';position:absolute;
+  top:10px;right:20px;
+  font-family:'Playfair Display',serif;
+  font-size:5rem;color:var(--vermillion);
+  opacity:.15;line-height:1;
+}
+.testi-stars{color:var(--mustard);margin-bottom:.8rem;font-size:1.1rem}
+.testi-text{
+  color:var(--text-soft);font-style:italic;
+  line-height:1.7;margin-bottom:1.2rem;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.05rem;
+}
+.testi-author{
+  display:flex;align-items:center;gap:.8rem;
+}
+.testi-avatar{
+  width:45px;height:45px;border-radius:50%;
+  background:linear-gradient(135deg,var(--mustard),var(--terracotta));
+  display:flex;align-items:center;justify-content:center;
+  color:var(--cream);font-weight:700;
+}
+.testi-name{font-weight:700;font-size:.95rem}
+.testi-loc{font-size:.8rem;color:var(--text-soft)}
+
+/* Transparency */
+.transparency{background:var(--bg-alt)}
+.trans-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;max-width:1200px;margin:0 auto;
+}
+.trans-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;overflow:hidden;
+  transition:all .4s;
+}
+.trans-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 40px var(--shadow);
+}
+.trans-img{
+  width:100%;height:220px;
+  object-fit:cover;display:block;
+}
+.trans-body{padding:1.5rem}
+.trans-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem;font-weight:700;
+  margin-bottom:.5rem;
+}
+.trans-desc{color:var(--text-soft);font-size:.9rem;line-height:1.6}
+
+/* Packaging */
+.packaging{background:var(--bg)}
+.pack-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:1.5rem;max-width:1100px;margin:0 auto;
+}
+.pack-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:2rem;text-align:center;
+  transition:all .4s;
+}
+.pack-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 40px var(--shadow);
+}
+.pack-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem;font-weight:700;
+  margin-bottom:.8rem;
+}
+.pack-desc{color:var(--text-soft);font-size:.9rem;line-height:1.5}
+
+/* Locations */
+.locations{background:var(--bg-alt)}
+.loc-container{
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:3rem;
+  align-items:start;
+}
+.loc-map {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.loc-info h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.8rem;margin-bottom:1rem;
+}
+.loc-info p{color:var(--text-soft);line-height:1.7;margin-bottom:1rem}
+.loc-list{list-style:none;margin-top:1.5rem}
+.loc-list li{
+  padding:.8rem 0;
+  border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;
+  align-items:center;
+}
+.loc-list li:last-child{border:none}
+.loc-name{font-weight:600}
+.loc-status{
+  background:var(--banana);color:var(--cream);
+  padding:.2rem .7rem;border-radius:50px;
+  font-size:.75rem;font-weight:700;
+}
+.loc-status.coming{background:var(--mustard)}
+
+/* Hours */
+.hours{background:var(--bg)}
+.hours-card{
+  max-width:700px;margin:0 auto;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:2.5rem;
+}
+.hours-row{
+  display:flex;justify-content:space-between;
+  padding:.8rem 0;
+  border-bottom:1px dashed var(--border);
+}
+.hours-row:last-child{border:none}
+.hours-day{font-weight:600}
+.hours-time{color:var(--vermillion);font-weight:700}
+
+/* Contact */
+.contact{background:var(--bg-alt)}
+.contact-grid{
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:3rem;
+}
+.contact-info h3{
+  font-family:'Playfair Display',serif;
+  font-size:2rem;margin-bottom:1rem;
+}
+.contact-info p{color:var(--text-soft);line-height:1.7;margin-bottom:1.5rem}
+.contact-item{
+  display:flex;align-items:center;gap:1rem;
+  padding:1rem 0;
+}
+.contact-icon{
+  width:45px;height:45px;
+  background:rgba(155,28,49,.1);
+  border-radius:12px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--vermillion);
+}
+.contact-text strong{display:block;font-size:.95rem}
+.contact-text span{font-size:.85rem;color:var(--text-soft)}
+.contact-form{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:2rem;
+}
+.form-group{margin-bottom:1rem}
+.form-group label{
+  display:block;font-weight:600;
+  font-size:.85rem;margin-bottom:.4rem;
+}
+.form-group input,.form-group textarea{
+  width:100%;padding:.8rem 1rem;
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:10px;
+  font-family:'Manrope',sans-serif;
+  font-size:.95rem;color:var(--text);
+  transition:border .3s;
+}
+.form-group input:focus,.form-group textarea:focus{
+  outline:none;border-color:var(--vermillion);
+}
+.form-group textarea{resize:vertical;min-height:100px}
+
+/* Footer */
+footer{
+  background:linear-gradient(135deg,#1A0F0A 0%,#2B1810 100%);
+  color:var(--cream);
+  padding:4rem 2rem 2rem;
+}
+.footer-grid{
+  max-width:1200px;margin:0 auto;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:2rem;
+}
+.footer-brand h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.8rem;color:var(--cream);
+  margin-bottom:.8rem;
+}
+.footer-brand p{
+  color:rgba(248,244,233,.7);
+  line-height:1.7;font-size:.9rem;
+  margin-bottom:1rem;
+}
+.footer-col h4{
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;margin-bottom:1rem;
+  color:var(--mustard);
+}
+.footer-col ul{list-style:none}
+.footer-col li{margin-bottom:.6rem}
+.footer-col a{
+  color:rgba(248,244,233,.7);
+  text-decoration:none;font-size:.9rem;
+  transition:color .3s;
+}
+.footer-col a:hover{color:var(--mustard)}
+.footer-bottom{
+  max-width:1200px;margin:3rem auto 0;
+  padding-top:2rem;
+  border-top:1px solid rgba(248,244,233,.1);
+  display:flex;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+  font-size:.85rem;color:rgba(248,244,233,.5);
+}
+.social-links {
+  display: flex;
+  gap: .8rem;
+}
+.social-links a {
+  width: 36px;
+  height: 36px;
+  background: rgba(248, 244, 233, .1);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cream);
+  text-decoration: none;
+  transition: all .3s;
+}
+.social-links a:hover {
+  background: var(--vermillion);
+  transform: translateY(-3px);
+  color: var(--cream);
+}
+.social-links a svg {
+  stroke: currentColor;
+  fill: none;
+}
+
+/* Cart drawer */
+.cart-drawer{
+  position:fixed;top:0;right:-420px;
+  width:400px;max-width:90vw;
+  height:100vh;
+  background:var(--card);
+  box-shadow:-10px 0 40px var(--shadow);
+  z-index:200;
+  transition:right .4s;
+  display:flex;flex-direction:column;
+}
+.cart-drawer.open{right:0}
+.cart-header{
+  padding:1.5rem;
+  border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.cart-header h3{font-family:'Playfair Display',serif}
+.cart-close{
+  background:none;border:none;
+  font-size:1.5rem;cursor:pointer;
+  color:var(--text);
+}
+.cart-items{flex:1;overflow-y:auto;padding:1rem}
+.cart-item{
+  display:flex;gap:1rem;
+  padding:1rem 0;
+  border-bottom:1px solid var(--border);
+}
+.cart-item-img{
+  width:70px;height:70px;
+  border-radius:10px;object-fit:cover;
+}
+.cart-item-info{flex:1}
+.cart-item-name{font-weight:700;font-size:.95rem}
+.cart-item-price{color:var(--vermillion);font-weight:700;font-size:.9rem;margin-top:.3rem}
+.cart-qty{
+  display:flex;align-items:center;gap:.5rem;
+  margin-top:.5rem;
+}
+.qty-btn{
+  width:26px;height:26px;
+  border:1px solid var(--border);
+  background:var(--bg);
+  border-radius:50%;
+  cursor:pointer;font-weight:700;
+  color:var(--text);
+}
+.cart-footer{
+  padding:1.5rem;
+  border-top:1px solid var(--border);
+}
+.cart-total{
+  display:flex;justify-content:space-between;
+  font-size:1.1rem;font-weight:700;
+  margin-bottom:1rem;
+}
+.checkout-btn{
+  width:100%;padding:1rem;
+  background:linear-gradient(135deg,var(--vermillion),var(--terracotta));
+  color:var(--cream);border:none;
+  border-radius:50px;font-weight:700;
+  cursor:pointer;font-size:1rem;
+  transition:all .3s;
+}
+.checkout-btn:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(155,28,49,.4)}
+.cart-empty{text-align:center;padding:3rem 1rem;color:var(--text-soft)}
+
+/* Overlay */
+.overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.5);
+  z-index:150;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s;
+}
+.overlay.show{opacity:1;pointer-events:auto}
+
+/* Scroll reveal */
+.reveal{
+  opacity:0;transform:translateY(30px);
+  transition:opacity .8s,transform .8s;
+}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* Responsive */
+@media(max-width:960px){
+  .hero{
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 7rem 1.5rem 4rem;
+  }
+  .hero-content{
+    text-align: center;
+    max-width: 100%;
+  }
+  .hero-sub{
+    margin: 0 auto 2.5rem;
+  }
+  .hero-cta{
+    justify-content: center;
+  }
+  .hero-graphic{
+    width: 280px;
+    height: 280px;
+    margin-top: 2.5rem;
+  }
+  .story-container,.loc-container,.contact-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:700px){
+  nav{padding:.8rem 1rem}
+  .nav-links{
+    position:fixed;top:70px;left:0;right:0;
+    background:var(--nav-bg);
+    flex-direction:column;
+    padding:1.5rem;gap:1rem;
+    border-bottom:1px solid var(--border);
+    transform:translateY(-150%);
+    transition:transform .3s;
+  }
+  .nav-links.open{transform:translateY(0)}
+  .menu-toggle{display:flex}
+  section{padding:3.5rem 1rem}
+  .footer-grid{grid-template-columns:1fr}
+}
+
+/* Saree border divider */
+.saree-border{
+  height:20px;
+  background:
+    repeating-linear-gradient(90deg,
+      var(--vermillion) 0px,var(--vermillion) 8px,
+      var(--cream) 8px,var(--cream) 12px,
+      var(--mustard) 12px,var(--mustard) 16px,
+      var(--cream) 16px,var(--cream) 20px
+    );
+  position:relative;
+}
+.saree-border::before,.saree-border::after{
+  content:'';position:absolute;left:0;right:0;height:3px;
+  background:var(--terracotta);
+}
+.saree-border::before{top:0}
+.saree-border::after{bottom:0}
+
+/* Corner lotus */
+.corner-lotus{
+  position:absolute;
+  width:60px;height:60px;
+  opacity:.1;
+}
+.corner-lotus.tl{top:20px;left:20px}
+.corner-lotus.tr{top:20px;right:20px;transform:scaleX(-1)}
+.corner-lotus.bl{bottom:20px;left:20px;transform:scaleY(-1)}
+.corner-lotus.br{bottom:20px;right:20px;transform:scale(-1)}
+</style>
+</head>
+<body>
+
+<!-- Loader -->
+<div id="loader">
+  <div style="text-align:center">
+    <div class="handi-loader">
+      <!-- Steam lines -->
+      <div class="loader-steam">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <!-- Handi Pot Icon -->
+      <svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#9B1C31" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 9h12" />
+        <path d="M5 9c0 7 2.5 10 7 10s7-3 7-10" />
+        <path d="M8 6h8" />
+      </svg>
+    </div>
+    <div class="loader-text">RAJBARI RANNA</div>
+  </div>
+</div>
+
+<!-- Nav -->
+<nav>
+  <a href="#home" class="nav-logo">
+  <img class="logo-img" src="https://i.postimg.cc/ncdpxjdT/Rajbari-Ranna.png" alt="Rajbari Ranna Logo">
+  
+</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#bhoj">Today's Bhoj</a></li>
+    <li><a href="#handi">From Our Handi</a></li>
+    <li><a href="#journey">Our Journey Home</a></li>
+    <li><a href="#guests">Words from Guests</a></li>
+    <li><a href="#meal">Let's Share a Meal</a></li>
+  </ul>
+  <div class="nav-actions">
+        
+    <button class="icon-btn" id="cartBtn" title="Cart">
+      <i data-lucide="shopping-bag" style="width: 18px; height: 18px;"></i>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+    
+    <button class="icon-btn menu-toggle" id="menuToggle">☰</button>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+  <svg class="corner-lotus tl" viewBox="0 0 60 60"><path d="M30 10 Q20 25 30 40 Q40 25 30 10" fill="#9B1C31"/><path d="M15 25 Q30 30 45 25 Q30 35 15 25" fill="#9B1C31"/></svg>
+  <svg class="corner-lotus br" viewBox="0 0 60 60"><path d="M30 10 Q20 25 30 40 Q40 25 30 10" fill="#9B1C31"/><path d="M15 25 Q30 30 45 25 Q30 35 15 25" fill="#9B1C31"/></svg>
+  
+  <!-- Left Side Text Content -->
+  <div class="hero-content">
+    <div class="hero-badge">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--mustard)" style="margin-right: 6px; display: inline-block; vertical-align: middle;"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.787 1.4 8.168L12 18.896l-7.334 3.857 1.4-8.168L.133 9.41l8.2-1.192z"/></svg>
+      Authentic Bengali Cloud Kitchen
+    </div>
+    
+    <h1>Rajbari Ranna</h1>
+    <p class="hero-tagline">The taste of a royal home, the warmth of your own.</p>
+    <p class="hero-sub">From our Heritage Kitchen in Bengaluru to your table — every dish is a story, every meal a memory. Handcrafted by the women of Bengal, served with the love of a mother's kitchen.</p>
+    
+      </div>
+
+  <!-- Right Side Rotating Circle -->
+  <div class="hero-graphic">
+    <img src="images/circle2.png" class="rotating-circle" alt="Bengali Decorative Motif">
+    <img src="https://i.postimg.cc/x1BFMtWC/Gemini-Generated-Image-a4y7v6a4y7v6a4y7-Picsart-Background-Remover.png" class="hero-center-art" alt="Rajbari Ranna Mascot">
+    <div class="pot-steam-container">
+    <div class="steam-particle"></div>
+    <div class="steam-particle"></div>
+    <div class="steam-particle"></div>
+    <div class="steam-particle"></div>
+  </div> 
+  </div>
+</section>
+
+<div class="saree-border"></div>
+
+<!-- Offers -->
+<section class="offers" id="offers">
+  <div class="section-header reveal">
+    <div class="section-tag">✦ RAJBARI UPOHAR ✦</div>
+    <h2 class="section-title">Special Offers</h2>
+    <p class="section-subtitle">Because every meal deserves a warm welcome</p>
+  </div>
+  <div class="offers-grid">
+    <div class="offer-card reveal">
+      <div class="steam"></div>
+      <div class="offer-discount">20% OFF</div>
+      <div class="offer-title">First Taste of Home</div>
+      <div class="offer-desc">On your first order above ₹499</div>
+      <div class="coupon">
+        <span class="coupon-code">GHORE20</span>
+        <button class="copy-btn" onclick="copyCode('GHORE20')">Copy</button>
+      </div>
+    </div>
+    <div class="offer-card reveal">
+      <div class="steam"></div>
+      <div class="offer-discount">100 OFF</div>
+      <div class="offer-title">Sunday Bhoj Special</div>
+      <div class="offer-desc">Every Sunday on orders above ₹799</div>
+      <div class="coupon">
+        <span class="coupon-code">ROBIBAR100</span>
+        <button class="copy-btn" onclick="copyCode('ROBIBAR100')">Copy</button>
+      </div>
+    </div>
+    <div class="offer-card reveal">
+      <div class="steam"></div>
+      <div class="offer-discount">Free Delivery</div>
+      <div class="offer-title">Mishti with Every Meal</div>
+      <div class="offer-desc">Free Rosogolla on orders above ₹599</div>
+      <div class="coupon">
+        <span class="coupon-code">MISHTIFREE</span>
+        <button class="copy-btn" onclick="copyCode('MISHTIFREE')">Copy</button>
+      </div>
+    </div>
+    <div class="offer-card reveal">
+      <div class="steam"></div>
+      <div class="offer-discount">15% OFF</div>
+      <div class="offer-title">Family Thali Feast</div>
+      <div class="offer-desc">On complete Bengali Thali orders</div>
+      <div class="coupon">
+        <span class="coupon-code">THALI15</span>
+        <button class="copy-btn" onclick="copyCode('THALI15')">Copy</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Delivery -->
+<section class="delivery">
+  <div class="section-header reveal">
+    <div class="section-tag">✦ Delivery Partners ✦</div>
+    <h2 class="section-title">From Our Kitchen to Your Door</h2>
+    <p class="section-subtitle">Hot, fresh, and delivered with care</p>
+  </div>
+  <div class="delivery-grid">
+    <div class="delivery-card reveal">
+      <div class="delivery-logo swiggy">Swiggy</div>
+      <div style="font-size:.9rem;color:var(--text-soft)">Order on Swiggy</div>
+      <div class="delivery-time">Avg. delivery <strong>30-40 min</strong></div>
+    </div>
+    <div class="delivery-card reveal">
+      <div class="delivery-logo zomato">Zomato</div>
+      <div style="font-size:.9rem;color:var(--text-soft)">Order on Zomato</div>
+      <div class="delivery-time">Avg. delivery <strong>35-45 min</strong></div>
+    </div>
+    <div class="delivery-card reveal">
+      <div class="delivery-logo direct">Direct Order</div>
+      <div style="font-size:.9rem;color:var(--text-soft)">Via WhatsApp / Website</div>
+      <div class="delivery-time">Avg. delivery <strong>45-60 min</strong></div>
+    </div>
+  </div>
+</section>
+
+<div class="saree-border"></div>
+
+<!-- Best Sellers -->
+<section class="bestsellers" id="bhoj">
+  <div class="section-header reveal">
+    <div class="section-tag">✦ Today's Bhoj ✦</div>
+    <h2 class="section-title">Our Bestsellers</h2>
+    <p class="section-subtitle">The dishes our guests can't stop ordering</p>
+  </div>
+  <div class="scroll-row" id="bestsellerRow">
+    <!-- JS populated -->
+  </div>
+</section>
+
+<!-- Categories -->
+<section class="categories" id="handi">
+  <div class="section-header reveal">
+    <div class="section-tag">✦ From Our Handi ✦</div>
+    <h2 class="section-title">Explore Our Menu</h2>
+    <p class="section-subtitle">Authentic Bengali flavours, categorised with love</p>
+  </div>
+  <div class="filter-bar reveal">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="veg"> Veg</button>
+    <button class="filter-btn" data-filter="nonveg"> Non-Veg</button>
+    <button class="filter-btn" data-filter="sweet"> Sweets</button>
+  </div>
+  <div class="cat-grid" id="catGrid">
+    <!-- JS populated -->
+  </div>
+</section>
+
+<div class="saree-border"></div>
+
+<!-- Story -->
+<section class="story" id="journey">
+  <div class="story-container">
+    <div class="story-left-col">
+      <div class="story-img-wrap reveal">
+        <img class="story-img" src="https://i.postimg.cc/xTn3kDhr/Rajnandini-Roy.png" alt="Rajnandini Roy - Founder of Rajbari Ranna">
+      </div>
+      <div class="founder-caption reveal">Our Founder — Rajnandini Roy</div>
+    </div>
+    
+    <div class="story-content reveal">
+      <div class="section-tag">✦ Our Journey Home ✦</div>
+      <h2>Our Journey Home</h2>
+      <p class="lead">Some journeys don't take us to new places—they quietly lead us back to where we truly belong.</p>
+      <p>When our founder moved from Bengal to Bengaluru, she carried with her ambitions, dreams, and a suitcase full of memories. Yet, amidst the pace of a new city, it wasn't the festivals or familiar streets she missed the most—it was the comforting aroma of mustard oil, the slow rhythm of Sunday lunches, and the recipes lovingly passed down by the women in her family.</p>
+      <p>Weekend phone calls with her mother gradually turned into cooking lessons. One cherished family recipe became another, and soon her home was filled with the warmth of traditional Bengali meals shared with friends who longed for the taste of home just as deeply.</p>
+      <div class="story-quote">"She soon realized that every Bengali household carries a recipe that tells a story."</div>
+      <p>Determined to preserve these stories rather than let them fade with time, she brought together women from different corners of Bengal—each carrying treasured family recipes, culinary traditions, and generations of wisdom.</p>
+      <p>Today, <strong>Rajbari Ranna</strong> is more than a cloud kitchen. It is a celebration of Bengal's rich culinary heritage, where every dish is prepared with authenticity, every recipe honours the hands that preserved it, and every meal carries a story waiting to be shared.</p>
+      <p>From our Heritage Kitchen in Bengaluru to homes across the city, we invite you to experience the warmth of Bengal—one timeless recipe at a time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Team -->
+<section class="team">
+  <div class="section-header reveal">
+    <div class="section-tag">✦ The Women Behind Every Recipe ✦</div>
+    <h2 class="section-title">The Soul Of Our Kitchen</h2>
+    <p class="section-subtitle">"Every woman in our kitchen brings a family recipe, a lifetime of memories, and the warmth of a Bengali home."</p>
+  </div>
+  <div class="team-grid">
+  <!-- Card 1: Sharmila Di -->
+  <div class="team-card reveal">
+    <div class="team-avatar">
+      <img src="images/Sarmila.jpeg" alt="Sharmila Di">
+    </div>
+    <div class="team-name">Sharmila Di</div>
+    <div class="team-role">Keeper of Traditional Fish Curries</div>
+    <div class="team-bio">Learnt Shorshe Ilish from her grandmother nearly thirty years ago. She believes patience is the secret ingredient behind every Bengali meal.</div>
+  </div>
+
+  <!-- Card 2: Rina Di -->
+  <div class="team-card reveal">
+    <div class="team-avatar">
+      <img src="images/Rina.png" alt="Rina Di">
+    </div>
+    <div class="team-name">Rina Di</div>
+    <div class="team-role">Queen of Homemade Sweets</div>
+    <div class="team-bio">The first person everyone calls before every Durga Puja. Her Mishti Doi recipe has remained unchanged for three generations.</div>
+  </div>
+
+  <!-- Card 3: Mousumi Di -->
+  <div class="team-card reveal">
+    <div class="team-avatar">
+      <img src="images/Mousambi.jpeg" alt="Mousumi Di">
+    </div>
+    <div class="team-name">Mousumi Di</div>
+    <div class="team-role">Master of Sunday Feasts</div>
+    <div class="team-bio">Known for preparing Kosha Mangsho exactly the way her mother taught her—with slow cooking, fresh spices and plenty of love.</div>
+  </div>
+</div>
+</section>
+
+<!-- Stats -->
+<section class="stats">
+  <div class="section-header reveal">
+    <div class="section-tag">✦ Kitchen Statistics ✦</div>
+    <h2 class="section-title">Our Numbers Tell the Story</h2>
+    <p class="section-subtitle">Trusted by thousands of Bengali food lovers</p>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card reveal">
+      <div class="stat-num" data-target="4.9">0</div>
+      <div class="stat-label">Average Rating </div>
+    </div>
+    <div class="stat-card reveal">
+      <div class="stat-num" data-target="25000">0</div>
+      <div class="stat-label">Orders Delivered </div>
+    </div>
+    <div class="stat-card reveal">
+      <div class="stat-num" data-target="8">0</div>
+      <div class="stat-label">Years of Experience </div>
+    </div>
+    <div class="stat-card reveal">
+      <div class="stat-num" data-target="120">0</div>
+      <div class="stat-label">Authentic Recipes </div>
+    </div>
+  </div>
+</section>
+
+<div class="saree-border"></div>
+
+<!-- Testimonials -->
+<section class="testimonials" id="guests">
+  <div class="section-header reveal">
+    <div class="section-tag">✦ Words from Our Guests ✦</div>
+    <h2 class="section-title">Reviews That Warm Our Hearts</h2>
+    <p class="section-subtitle">What our family of food lovers says</p>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">The Shorshe Ilish tasted exactly like my Dida's cooking. I cried a little. In the best way possible. Rajbari Ranna brought me home.</div>
+      <div class="testi-author">
+        <div class="testi-avatar">A</div>
+        <div><div class="testi-name">Ananya Chatterjee</div><div class="testi-loc">Koramangala, Bengaluru</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">Finally, a cloud kitchen that understands Bengali food isn't just fish and rice—it's an emotion. The Kosha Mangsho is divine!</div>
+      <div class="testi-author">
+        <div class="testi-avatar">R</div>
+        <div><div class="testi-name">Ritwik Banerjee</div><div class="testi-loc">HSR Layout, Bengaluru</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">Ordered the Sunday Thali for my family. My mother, who is very particular about Bengali food, said "This is the real deal." Highest praise!</div>
+      <div class="testi-author">
+        <div class="testi-avatar">S</div>
+        <div><div class="testi-name">Sohini Mukherjee</div><div class="testi-loc">Indiranagar, Bengaluru</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">The Mishti Doi in the clay pot—pure nostalgia. Packaging was eco-friendly too. This is how food delivery should be done.</div>
+      <div class="testi-author">
+        <div class="testi-avatar">D</div>
+        <div><div class="testi-name">Debanjan Roy</div><div class="testi-loc">Whitefield, Bengaluru</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">Being a Bengali in Bengaluru, I missed home-cooked meals terribly. Rajbari Ranna is my weekend ritual now. Thank you for keeping traditions alive!</div>
+      <div class="testi-author">
+        <div class="testi-avatar">P</div>
+        <div><div class="testi-name">Priyanka Das</div><div class="testi-loc">JP Nagar, Bengaluru</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">Not Bengali myself, but this food converted me. The flavours are so rich and authentic. The Chingri Malai Curry is now my favourite dish ever!</div>
+      <div class="testi-author">
+        <div class="testi-avatar">K</div>
+        <div><div class="testi-name">Karthik Iyer</div><div class="testi-loc">Jayanagar, Bengaluru</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Transparency -->
+<section class="transparency">
+  <div class="section-header reveal">
+    <div class="section-tag">✦ Kitchen Transparency ✦</div>
+    <h2 class="section-title">Inside Our Heritage Kitchen</h2>
+    <p class="section-subtitle">Where tradition meets cleanliness, and every pot tells a story</p>
+  </div>
+  <div class="trans-grid">
+    <div class="trans-card reveal">
+      <img class="trans-img" src="https://image.qwenlm.ai/public_source/f247fb40-e315-4fc9-b5a4-ce33905e2cd3/12e5719db-d554-47e9-8812-13b8b8fdecb7.png" alt="Our team cooking">
+      <div class="trans-body">
+        <div class="trans-title">Our All-Women Team</div>
+        <div class="trans-desc">Every member of our team brings a cherished dish passed down through generations, making every meal a collection of stories.</div>
+      </div>
+    </div>
+    <div class="trans-card reveal">
+      <img class="trans-img" src="https://image.qwenlm.ai/public_source/f247fb40-e315-4fc9-b5a4-ce33905e2cd3/1b1ca36d4-292a-40de-96ce-66250c92d4df.png" alt="Traditional cooking">
+      <div class="trans-body">
+        <div class="trans-title">Authentic Bengali Cooking</div>
+        <div class="trans-desc">Slow-cooked in earthen pots, seasoned with freshly ground spices, and prepared the way our grandmothers taught us.</div>
+      </div>
+    </div>
+    <div class="trans-card reveal">
+      <img class="trans-img" src="https://image.qwenlm.ai/public_source/f247fb40-e315-4fc9-b5a4-ce33905e2cd3/1fb62d747-c690-4099-8e1d-91166a43dc86.png" alt="Traditional utensils">
+      <div class="trans-body">
+        <div class="trans-title">Earthen Pots & Traditional Utensils</div>
+        <div class="trans-desc">We cook in clay handis and serve in traditional ware—because the vessel matters as much as the recipe.</div>
+      </div>
+    </div>
+    <div class="trans-card reveal">
+      <img class="trans-img" src="https://image.qwenlm.ai/public_source/f247fb40-e315-4fc9-b5a4-ce33905e2cd3/1a953f550-b4d0-4b86-ad31-e55c1c9401ca.png" alt="Clean kitchen">
+      <div class="trans-body">
+        <div class="trans-title">Spotless & Hygienic</div>
+        <div class="trans-desc">Our kitchen follows strict hygiene protocols. Cleanliness is our promise—because love and hygiene go hand in hand.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="saree-border"></div>
+
+<!-- Packaging -->
+<section class="packaging">
+  <div class="section-header reveal">
+    <div class="section-tag">✦ Our Packaging ✦</div>
+    <h2 class="section-title">Wrapped with Care, Delivered with Love</h2>
+    <p class="section-subtitle">Eco-friendly, traditional, and designed to preserve every flavour</p>
+  </div>
+  <div class="pack-grid">
+    <div class="pack-card reveal">
+      <div class="pack-title">Eco-Friendly Materials</div>
+      <div class="pack-desc">Banana leaf liners, recycled paper boxes, and biodegradable containers. Good for you, good for the planet.</div>
+    </div>
+    <div class="pack-card reveal">
+      <div class="pack-title">Traditional Clay Pots</div>
+      <div class="pack-desc">Select dishes are served in authentic earthen handis—keeping the food warm and the tradition alive.</div>
+    </div>
+    <div class="pack-card reveal">
+      <div class="pack-title">Thermal Insulation</div>
+      <div class="pack-desc">Premium thermal bags ensure your food arrives hot, fresh, and exactly as it left our kitchen.</div>
+    </div>
+    <div class="pack-card reveal">
+      <div class="pack-title">Sealed & Secure</div>
+      <div class="pack-desc">Tamper-proof seals and secure packaging—because your safety and trust matter most to us.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Locations -->
+<section class="locations">
+  <div class="section-header reveal">
+    <div class="section-tag">✦ Where We Serve ✦</div>
+    <h2 class="section-title">Our Delivery Locations</h2>
+    <p class="section-subtitle">Bringing Bengal's warmth to your neighbourhood</p>
+  </div>
+  <div class="loc-container">
+    <div class="loc-map reveal">
+      <div style="text-align:center;color:var(--text-soft);font-family:'Playfair Display',serif;font-size:1.3rem">
+        <div style="font-size:3rem;margin-bottom:.5rem">📍</div>
+        <strong style="color:var(--vermillion)">Bengaluru</strong>
+        <div style="font-size:.9rem;margin-top:.5rem">Delivery radius: 12 km from Heritage Kitchen</div>
+        <div style="font-size:.85rem;margin-top:1rem;padding:1rem;background:var(--bg-alt);border-radius:12px">
+          <strong>Model:</strong> Single Heritage Kitchen (Cloud Kitchen)<br>
+          <strong>City:</strong> Bengaluru (Pilot)<br>
+          <strong>Expansion:</strong> Coming soon to Hyderabad & Chennai
+        </div>
+      </div>
+    </div>
+    <div class="loc-info reveal">
+      <h3>Currently Delivering In</h3>
+      <p>Our Heritage Kitchen is based in Bengaluru, inspired by our founder's journey from Bengal to this vibrant city. We currently deliver within a 12 km radius, covering major neighbourhoods.</p>
+      <ul class="loc-list">
+        <li><span class="loc-name">Koramangala</span><span class="loc-status">Live</span></li>
+        <li><span class="loc-name">HSR Layout</span><span class="loc-status">Live</span></li>
+        <li><span class="loc-name">Indiranagar</span><span class="loc-status">Live</span></li>
+        <li><span class="loc-name">JP Nagar</span><span class="loc-status">Live</span></li>
+        <li><span class="loc-name">Jayanagar</span><span class="loc-status">Live</span></li>
+        <li><span class="loc-name">Whitefield</span><span class="loc-status">Live</span></li>
+        <li><span class="loc-name">Hyderabad</span><span class="loc-status coming">Coming Soon</span></li>
+        <li><span class="loc-name">Chennai</span><span class="loc-status coming">Coming Soon</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="saree-border"></div>
+
+<!-- Hours -->
+<section class="hours">
+  <div class="section-header reveal">
+    <div class="section-tag">✦ Working Hours ✦</div>
+    <h2 class="section-title">When Our Kitchen is Open</h2>
+    <p class="section-subtitle">We cook fresh, every single day</p>
+  </div>
+  <div class="hours-card reveal">
+    <div class="hours-row"><span class="hours-day">Monday – Friday</span><span class="hours-time">11:00 AM – 10:00 PM</span></div>
+    <div class="hours-row"><span class="hours-day">Saturday</span><span class="hours-time">10:00 AM – 11:00 PM</span></div>
+    <div class="hours-row"><span class="hours-day">Sunday (Special Bhoj Day)</span><span class="hours-time">10:00 AM – 11:30 PM</span></div>
+    <div class="hours-row"><span class="hours-day">Festival Days</span><span class="hours-time">9:00 AM – 12:00 AM</span></div>
+    <div style="text-align:center;margin-top:1.5rem;padding-top:1.5rem;border-top:1px dashed var(--border);color:var(--text-soft);font-size:.9rem">
+      ❖ <em>Special Sunday Bengali Thali available only on weekends</em>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact" id="meal">
+  <div class="section-header reveal">
+    <div class="section-tag">✦ Let's Share a Meal ✦</div>
+    <h2 class="section-title">Get in Touch</h2>
+    <p class="section-subtitle">We'd love to hear from you</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <h3>Reach Out to Us</h3>
+      <p>Whether it's a catering enquiry, feedback, or just to say hello—we're always happy to hear from our food family.</p>
+      
+      <div class="contact-item">
+        <div class="contact-icon">
+          <i data-lucide="phone" style="width: 20px; height: 20px;"></i>
+        </div>
+        <div class="contact-text"><strong>Phone</strong><span>+91 98765 43210</span></div>
+      </div>
+      
+      <div class="contact-item">
+        <div class="contact-icon">
+          <i data-lucide="mail" style="width: 20px; height: 20px;"></i>
+        </div>
+        <div class="contact-text"><strong>Email</strong><span>hello@rajbariranna.com</span></div>
+      </div>
+      
+      <div class="contact-item">
+        <div class="contact-icon">
+          <i data-lucide="message-square" style="width: 20px; height: 20px;"></i>
+        </div>
+        <div class="contact-text"><strong>WhatsApp</strong><span>+91 98765 43210</span></div>
+      </div>
+      
+      <div class="contact-item">
+        <div class="contact-icon">
+          <i data-lucide="map-pin" style="width: 20px; height: 20px;"></i>
+        </div>
+        <div class="contact-text"><strong>Heritage Kitchen</strong><span>HSR Layout, Bengaluru - 560102</span></div>
+      </div>
+      
+      <div class="contact-item">
+        <div class="contact-icon">
+          <i data-lucide="clock" style="width: 20px; height: 20px;"></i>
+        </div>
+        <div class="contact-text"><strong>Hours</strong><span>Mon-Sun: 11 AM - 10 PM</span></div>
+      </div>
+    </div>
+    <form class="contact-form reveal" onsubmit="submitForm(event)">
+      <div class="form-group"><label>Your Name</label><input type="text" required placeholder="e.g. Ananya Chatterjee"></div>
+      <div class="form-group"><label>Phone / Email</label><input type="text" required placeholder="How can we reach you?"></div>
+      <div class="form-group"><label>Subject</label><input type="text" placeholder="Order enquiry, feedback, catering..."></div>
+      <div class="form-group"><label>Message</label><textarea placeholder="Tell us what's on your mind..."></textarea></div>
+      
+      <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; display:inline-flex; align-items:center; gap:8px;">
+        <span>Send Message</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle;">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h3>Rajbari Ranna</h3>
+      <p>The taste of a royal home, the warmth of your own. An authentic Bengali cloud kitchen, crafted by women, served with love.</p>
+      <div class="social-links">
+        <a href="#" title="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+        </a>
+        <a href="#" title="Facebook">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="#" title="Twitter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+        </a>
+        <a href="#" title="YouTube">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17z"/><polygon points="10 15 15 12 10 9"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#bhoj">Today's Bhoj</a></li>
+        <li><a href="#handi">From Our Handi</a></li>
+        <li><a href="#journey">Our Journey Home</a></li>
+        <li><a href="#guests">Words from Guests</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Order</h4>
+      <ul>
+        <li><a href="#">Swiggy</a></li>
+        <li><a href="#">Zomato</a></li>
+        <li><a href="#">WhatsApp Order</a></li>
+        <li><a href="#">Catering</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="#meal">Contact Us</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div style="display: inline-flex; align-items: center; gap: 4px;">
+      © 2026 Rajbari Ranna. Made with 
+      <i data-lucide="heart" style="width: 12px; height: 12px; display: inline-block; fill: var(--vermillion); color: var(--vermillion);"></i> 
+      in Bengaluru.
+    </div>
+    <div>Crafted by the women of Bengal</div>
+  </div>
+</footer>
+
+<!-- Cart Drawer -->
+<div class="overlay" id="overlay"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3> Your Bhoj Basket</h3>
+    <button class="cart-close" id="cartClose">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">Your basket is empty. Add some delicious Bengali dishes! </div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+    <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+  </div>
+</div>
+
+<script>
+// Data
+const bestsellers = [
+  {id:1,name:"Shorshe Ilish",desc:"Hilsa fish in mustard gravy, slow-cooked to perfection",price:449,img:"https://image.qwenlm.ai/public_source/f247fb40-e315-4fc9-b5a4-ce33905e2cd3/171b0f915-22f9-46d0-a1b8-9cd26f86e99c.png",veg:false},
+  {id:2,name:"Kosha Mangsho",desc:"Slow-braised mutton with aromatic spices",price:399,img:"https://image.qwenlm.ai/public_source/f247fb40-e315-4fc9-b5a4-ce33905e2cd3/13b9e9a48-4a05-49aa-9d16-077215b47ae3.png",veg:false},
+  {id:3,name:"Chingri Malai Curry",desc:"Prawns in rich coconut milk gravy",price:479,img:"https://i.postimg.cc/SRbqjKg6/1784414323037-2-jpg.jpg",veg:false},
+  {id:4,name:"Bengali Thali",desc:"Complete meal with rice, dal, fish, veggies & sweets",price:549,img:"https://image.qwenlm.ai/public_source/f247fb40-e315-4fc9-b5a4-ce33905e2cd3/1fb62d747-c690-4099-8e1d-91166a43dc86.png",veg:false},
+  {id:5,name:"Mishti Doi Platter",desc:"Traditional sweet yogurt in clay pot with rosogolla",price:249,img:"https://image.qwenlm.ai/public_source/f247fb40-e315-4fc9-b5a4-ce33905e2cd3/1be8e945c-5a3d-4ab7-93b5-904a2615cc49.png",veg:true},
+  {id:6,name:"Sandesh Box",desc:"Assorted Bengali sweets, handcrafted daily",price:299,img:"https://i.postimg.cc/hvKDpjTC/1784415937396-2-jpg.jpg",veg:true}
+];
+
+const categories = [
+  {id:"fish",name:"Maach (Fish Curries)",icon:"🐟",desc:"The soul of Bengali cuisine—fresh fish cooked in mustard, poppy seed, and coconut gravies.",price:"₹349 – ₹549",items:["Shorshe Ilish","Paturi","Doi Maach","Kalia"],veg:false,img:"https://i.postimg.cc/V631dPqB/Fish-Curry-Masala.jpg"},
+  {id:"mutton",name:"Mangsho (Mutton)",icon:"",desc:"Slow-cooked mutton curries with the rich, dark flavours of traditional Bengali spices.",price:"₹379 – ₹499",items:["Kosha Mangsho","Uchchhe Mangsho","Mutton Rezala"],veg:false,img:"https://i.postimg.cc/Y2YBbVf4/Takshila-X-DNY-Hospitality.jpg"},
+  {id:"chicken",name:"Murgi (Chicken)",icon:"🍗",desc:"Tender chicken preparations from fiery Jhal to creamy Malai curries.",price:"₹279 – ₹399",items:["Chicken Kosha","Malai Chicken","Jhal Murgi"],veg:false,img:"https://i.postimg.cc/YCX5vwkx/download-(1).jpg"},
+  {id:"veg",name:"Shobji (Vegetarian)",icon:"🥬",desc:"Seasonal vegetables cooked simply yet flavourfully—the everyday comfort of Bengali homes.",price:"179 – ₹299",items:["Shukto","Aloo Posto","Chholar Dal","Begun Bhaja"],veg:true,img:"https://i.postimg.cc/1XpBwDF8/Gathi-Kochur-Torkari-Bengali-Style-Arbi-Ki-Sabji-Pikturenama.jpg"},
+  {id:"rice",name:"Bhaat & Routine (Rice & Staples)",icon:"🍚",desc:"Fragrant Gobindobhog rice, steamed or pulao, paired with perfect dal and routine.",price:"₹149 – ₹349",items:["Gobindobhog Rice","Khichuri","Pulao","Moong Dal"],veg:true,img:"https://i.postimg.cc/4dcq27tk/How-To-Make-Bengali-Basanti-Pulao-At-Home.jpg"},
+  {id:"sweets",name:"Mishti (Sweets)",icon:"🍮",desc:"Handcrafted sweets that carry the warmth of every Bengali celebration.",price:"₹199 – ₹399",items:["Mishti Doi","Rosogolla","Sandesh","Pantua"],veg:true,sweet:true,img:"https://i.postimg.cc/6qLSwkY3/rasgulla.jpg"},
+  {id:"snacks",name:"Jhal & Chanachur (Snacks)",icon:"️",desc:"Spicy, tangy, and utterly addictive—Bengali street food and tea-time favourites.",price:"129 – ₹249",items:["Tele Bhaja","Singara","Kochuri","Chanachur"],veg:true,img:"https://i.postimg.cc/ryS7S4M8/enjoy-weather.jpg"},
+  {id:"thali",name:"Bhoj (Complete Meals)",icon:"🍽️",desc:"A complete Bengali feast—rice, dal, fish, veggies, chutney, and sweets on a banana leaf.",price:"₹499 – ₹799",items:["Sunday Thali","Festival Thali","Family Platter"],veg:false,img:"https://i.postimg.cc/1zPWHCHc/download.jpg"}
+];
+
+// Cart
+let cart = [];
+
+function renderBestsellers(){
+  const row = document.getElementById('bestsellerRow');
+  row.innerHTML = bestsellers.map(p=>`
+    <div class="product-card">
+      <div class="steam"></div>
+      <img class="product-img" src="${p.img}" alt="${p.name}">
+      <div class="product-body">
+        <div style="display:flex;justify-content:space-between;align-items:start">
+          <div class="product-name">${p.name}</div>
+          <div class="${p.veg?'veg-badge':'nonveg-badge'}"></div>
+        </div>
+        <div class="product-desc">${p.desc}</div>
+        <div class="product-footer">
+          <div class="product-price">₹${p.price}</div>
+          <button class="add-cart" onclick="addToCart(${p.id},'best')">Add +</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderCategories(filter='all'){
+  const grid = document.getElementById('catGrid');
+  const filtered = categories.filter(c=>{
+    if(filter==='all') return true;
+    if(filter==='veg') return c.veg;
+    if(filter==='nonveg') return !c.veg;
+    if(filter==='sweet') return c.sweet;
+    return true;
+  });
+  grid.innerHTML = filtered.map(c=>`
+    <div class="cat-card">
+      <img class="cat-icon-img" src="${c.img || 'https://via.placeholder.com/300x160'}" alt="${c.name}">
+      <div class="cat-name">${c.name}</div>
+      <div class="cat-desc">${c.desc}</div>
+      <div class="cat-price">${c.price}</div>
+      <div class="cat-items">${c.items.map(i=>`<span class="cat-item">${i}</span>`).join('')}</div>
+    </div>
+  `).join('');
+}
+
+function addToCart(id,type){
+  const item = type==='best' ? bestsellers.find(p=>p.id===id) : null;
+  if(!item) return;
+  const existing = cart.find(c=>c.id===id);
+  if(existing){existing.qty++}
+  else{cart.push({...item,qty:1})}
+  updateCart();
+  openCart();
+}
+
+function updateCart(){
+  document.getElementById('cartCount').textContent = cart.reduce((s,i)=>s+i.qty,0);
+  const itemsEl = document.getElementById('cartItems');
+  if(cart.length===0){
+    itemsEl.innerHTML = '<div class="cart-empty">Your basket is empty. Add some delicious Bengali dishes! </div>';
+  } else {
+    itemsEl.innerHTML = cart.map(i=>`
+      <div class="cart-item">
+        <img class="cart-item-img" src="${i.img}" alt="${i.name}">
+        <div class="cart-item-info">
+          <div class="cart-item-name">${i.name}</div>
+          <div class="cart-item-price">₹${i.price}</div>
+          <div class="cart-qty">
+            <button class="qty-btn" onclick="changeQty(${i.id},-1)">−</button>
+            <span>${i.qty}</span>
+            <button class="qty-btn" onclick="changeQty(${i.id},1)">+</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+  const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  document.getElementById('cartTotal').textContent = '₹'+total;
+}
+
+function changeQty(id,delta){
+  const item = cart.find(c=>c.id===id);
+  if(!item) return;
+  item.qty += delta;
+  if(item.qty<=0) cart = cart.filter(c=>c.id!==id);
+  updateCart();
+}
+
+function openCart(){
+  document.getElementById('cartDrawer').classList.add('open');
+  document.getElementById('overlay').classList.add('show');
+}
+function closeCart(){
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+}
+document.getElementById('cartBtn').addEventListener('click',openCart);
+document.getElementById('cartClose').addEventListener('click',closeCart);
+document.getElementById('overlay').addEventListener('click',closeCart);
+
+function checkout(){
+  if(cart.length===0){alert('Add some dishes first! ');return}
+  alert('Thank you! Your order has been placed. We\'ll deliver the warmth of Bengal soon! ');
+  cart = [];updateCart();closeCart();
+}
+
+// Filter
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderCategories(btn.dataset.filter);
+  });
+});
+
+
+// Menu toggle
+document.getElementById('menuToggle').addEventListener('click',()=>{
+  document.getElementById('navLinks').classList.toggle('open');
+});
+document.querySelectorAll('.nav-links a').forEach(a=>{
+  a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('open'));
+});
+
+// Copy coupon
+function copyCode(code){
+  navigator.clipboard.writeText(code).then(()=>{
+    alert('Coupon "'+code+'" copied! ');
+  }).catch(()=>{
+    prompt('Copy this code:',code);
+  });
+}
+
+// Form
+function submitForm(e){
+  e.preventDefault();
+  alert('Thank you! We\'ll get back to you soon. ');
+  e.target.reset();
+}
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// Stats counter
+const statsObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const el = e.target;
+      const target = parseFloat(el.dataset.target);
+      const isDecimal = target%1!==0;
+      let current = 0;
+      const step = target/60;
+      const timer = setInterval(()=>{
+        current += step;
+        if(current>=target){current=target;clearInterval(timer)}
+        el.textContent = isDecimal ? current.toFixed(1) : Math.floor(current).toLocaleString() + (target>=1000?'+':'');
+      },25);
+      statsObserver.unobserve(el);
+    }
+  });
+},{threshold:0.5});
+document.querySelectorAll('.stat-num').forEach(el=>statsObserver.observe(el));
+
+// Loader
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('loader').classList.add('hide');
+  },2200);
+});
+
+// Init
+lucide.createIcons();
+renderBestsellers();
+renderCategories();
+</script>
+</body>
+</html>
